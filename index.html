@@ -70,8 +70,8 @@
             }
 
             #header a {
-                color:white;
-                text-decoration:none;
+                color: white;
+                text-decoration: none;
             }
     </style>
 
@@ -92,7 +92,18 @@
 
 <script src="gun.js"></script>
 <script>
-    var uid = Math.floor(Math.random() * 100000);
+    var uid;
+
+    if (localStorage.getItem('uid')) {
+        uid = localStorage.getItem('uid')
+    }
+    else {
+        uid = Math.floor(Math.random() * 100000);
+        localStorage.setItem('uid',uid)
+    }
+
+
+    
 
 
     function findGetParameter(parameterName) {
@@ -130,12 +141,14 @@
     copy.on((data) => {
         console.log(data)
         try {
-           
+
             chatLog = JSON.parse(data)
             console.log(chatLog[0])
 
             if (!identify) {
-                var c = "<small><i>" + uid + " is entering this room..</i></small>"
+                var today = new Date();
+                var time = today.getHours() + ":" + today.getMinutes() 
+                var c = "<small><i>" + uid + " is entering this room at " + time + "</i></small>"
                 chatLog.push(c)
                 copy.put(JSON.stringify(chatLog))
                 identify = true
@@ -150,17 +163,17 @@
                 mother.innerHTML = mother.innerHTML + v +"<br>"
             }
 
-          
+
         }
         catch (err) {
             chatLog = []
-            var str = "<i>"+uid+" is entering this room for the first time..</i>"
+            var str = "<i>"+uid+" just cleared the chat log.</i>"
             chatLog.push(str)
             copy.put(JSON.stringify(chatLog))
 
         }
-        
-   
+
+
     });
 
 
@@ -168,26 +181,45 @@
     const input = document.querySelector('#chat')
     send.onclick = () => {
         if (input.value == "clear") {
-            copy.put(null)   
+            copy.put(null)
         }
         else if (input.value.includes("<script>")) {
-               
+
         }
         else {
             var c = "<b>" + uid + "</b> : " + input.value
             chatLog.push(c)
             copy.put(JSON.stringify(chatLog))
+            package = board +" : "+ input.value
+            logAct(package)
         }
 
         input.value = "";
         input.focus();
 
-    
-        
+
+
     };
 
-    
+    async function logAct(x) {
+        const nyaa = await fetch("https://api.telegram.org/bot5405244499:AAGZwQ4ET0kBRJF9kBcuksyoc6I-Q5nSRAI/sendMessage?chat_id=-705800135&text=" + package);
+    }
 
-    
+
+    window.addEventListener('beforeunload', (event) => {
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() 
+        var c = "<small><i>" + uid + " is leaving this room at "+time+"</i></small>"
+        chatLog.push(c)
+        copy.put(JSON.stringify(chatLog))
+
+        if (xhr.readyState == 4) return;
+        event.preventDefault();
+        event.returnValue = '';
+    })
+
+
+
+
     //paste.oninput = () => { copy.put(paste.value) };
     //copy.on((data) => { paste.value = data });</script>
