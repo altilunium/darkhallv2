@@ -84,7 +84,7 @@
     <br>
 
     <div id="bottom-bar">
-<textarea id="chat" name="inputMessage" maxlength="450"></textarea>
+<textarea id="chat" name="inputMessage" maxlength="450" onkeypress="handle(event)"></textarea>
         <button id="send" class="btn"></button>
     </div>
 
@@ -180,6 +180,12 @@
     const send = document.querySelector('#send')
     const input = document.querySelector('#chat')
     send.onclick = () => {
+        sendMessage()
+
+
+    };
+
+    async function sendMessage() {
         if (input.value == "clear") {
             copy.put(null)
         }
@@ -190,21 +196,26 @@
             var c = "<b>" + uid + "</b> : " + input.value
             chatLog.push(c)
             copy.put(JSON.stringify(chatLog))
-            package = board +" : "+ input.value
+            package = board + " : " + input.value
             logAct(package)
         }
 
         input.value = "";
         input.focus();
+    }
 
-
-
-    };
 
     async function logAct(x) {
         const nyaa = await fetch("https://api.telegram.org/bot5405244499:AAGZwQ4ET0kBRJF9kBcuksyoc6I-Q5nSRAI/sendMessage?chat_id=-705800135&text=" + package);
     }
 
+
+    function handle(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
 
     window.addEventListener('beforeunload', (event) => {
         var today = new Date();
