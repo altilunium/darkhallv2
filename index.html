@@ -39,7 +39,7 @@
             width: 38px;
             height: 39px;
             border-radius: 72px;
-            background-color: red;
+            background-color: #0c48d1;
             border: none;
             margin-left: 7px;
         }
@@ -56,19 +56,29 @@
             position: fixed;
             width: 100%;
             height: 30px;
-            background-color: black;
+            background-color: #1e92bf;
             top: 0px;
             left: 0px;
             color: white;
             text-align: center;
             padding-top: 9px;
         }
+
+            #header p {
+                margin-top: 2px;
+                font-family: arial;
+            }
+
+            #header a {
+                color:white;
+                text-decoration:none;
+            }
     </style>
 
 </head>
 <body>
 
-    <div id="header"></div>
+    <div id="header"><p><a href="https://rtnf.prose.sh/">Altilunium Darkhall - </a> <span id="bid"></span> </p></div>
     <div id="messages" class="card-block"></div>
 
     <br>
@@ -84,17 +94,43 @@
 <script>
     var uid = Math.floor(Math.random() * 100000);
 
+
+    function findGetParameter(parameterName) {
+        var result = null,
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+    const bid = document.querySelector('#bid')
+
+    console.log(findGetParameter("g"))
+    var board = findGetParameter("g")
+    console.log(board)
+    if (board != null) {
+        console.log("Ada!")
+        bid.innerHTML = board
+    } else {
+        board = 'test'
+        bid.innerHTML = "General Room"
+    }
+
+
     gun = Gun(['https://rtnf-gun.herokuapp.com/gun']);
-    copy = gun.get('test').get('chatlog');
-    var chatLog
+    copy = gun.get(board).get('chatlog');
+    console.log(copy)
+    var chatLog = []
     var identify = false
     //copy.put(null)
     copy.on((data) => {
         console.log(data)
         try {
-            
-
-
+           
             chatLog = JSON.parse(data)
             console.log(chatLog[0])
 
@@ -131,9 +167,18 @@
     const send = document.querySelector('#send')
     const input = document.querySelector('#chat')
     send.onclick = () => {
-        var c = "<b>"+uid+"</b> : "+input.value
-        chatLog.push(c)
-        copy.put(JSON.stringify(chatLog))
+        if (input.value == "clear") {
+            copy.put(null)   
+        }
+        else if (input.value.includes("<script>")) {
+               
+        }
+        else {
+            var c = "<b>" + uid + "</b> : " + input.value
+            chatLog.push(c)
+            copy.put(JSON.stringify(chatLog))
+        }
+
         input.value = "";
         input.focus();
 
