@@ -99,7 +99,7 @@
             console.log(chatLog[0])
 
             if (!identify) {
-                var c = "<i>" + uid + " entering this room..</i>"
+                var c = "<i>" + uid + " is entering this room..</i>"
                 chatLog.push(c)
                 copy.put(JSON.stringify(chatLog))
                 identify = true
@@ -118,7 +118,7 @@
         }
         catch (err) {
             chatLog = []
-            var str = "<i>"+uid+" entering this room for the first time..</i>"
+            var str = "<i>"+uid+" is entering this room for the first time..</i>"
             chatLog.push(str)
             copy.put(JSON.stringify(chatLog))
 
