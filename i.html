@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Darkhall</title>
+    <style>
+        #messages {
+            margin-top: 50px;
+            width: 95%;
+            padding-right: 5px;
+            padding-bottom: 80px;
+            word-break: break-word;
+        }
+
+        #bottom-bar {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 50px;
+            padding-top: 13px;
+            left: 0px;
+            background-color: #cacaca;
+        }
+
+        .chat-message {
+            margin-top: 5px;
+        }
+
+
+        #chat {
+            width: 80%;
+            resize: none;
+            margin-left: 5px;
+        }
+
+        #send {
+            width: 38px;
+            height: 39px;
+            border-radius: 72px;
+            background-color: red;
+            border: none;
+            margin-left: 7px;
+        }
+
+        #chat:active {
+            border: none;
+        }
+
+        #send:active {
+            border: none;
+        }
+
+        #header {
+            position: fixed;
+            width: 100%;
+            height: 30px;
+            background-color: black;
+            top: 0px;
+            left: 0px;
+            color: white;
+            text-align: center;
+            padding-top: 9px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Deleted!</h1>
+
+</body>
+
+<script src="gun.js"></script>
+<script>
+    var uid = Math.floor(Math.random() * 100000);
+
+    gun = Gun(['https://rtnf-gun.herokuapp.com/gun']);
+    copy = gun.get('test').get('chatlog');
+    var chatLog
+    copy.put(null)
+    
+
+
+ </script>
