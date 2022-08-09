@@ -146,6 +146,10 @@
 
     gun = Gun(['https://rtnf-gun.herokuapp.com/gun']);
     copy = gun.get(board).get('chatlog');
+    if (copy) {
+        document.getElementById('messages').innerHTML = ""
+    }
+
     console.log(copy)
     var chatLog = []
     var identify = false
@@ -242,7 +246,19 @@
 
 
     async function logAct(x) {
-        const nyaa = await fetch("https://api.telegram.org/bot5405244499:AAGZwQ4ET0kBRJF9kBcuksyoc6I-Q5nSRAI/sendMessage?chat_id=-705800135&text=" + package);
+        let data = new FormData()
+        data.append('a1', x)
+        fetch('https://rtnf.000webhostapp.com/n.php', {
+            method: 'POST',
+            body: data,
+        }).then(data => {
+            data.text().then(function (result) {
+                console.log("A!")
+                console.log(result)
+
+            })
+        })
+
     }
 
 
