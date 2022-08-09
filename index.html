@@ -80,18 +80,17 @@
 
     <div id="header"><p>Altilunium Darkhall - <span id="bid"></span> <a href="https://rtnf.prose.sh/altilunium_darkhall" target="_blank"><small>[about]</small></a>  </p></div>
     <div id="messages" class="card-block"></div>
-
     <br>
-
     <div id="bottom-bar">
-<textarea id="chat" name="inputMessage" maxlength="450" onkeypress="handle(event)"></textarea>
+    <textarea id="chat" name="inputMessage" maxlength="450" onkeypress="handle(event)"></textarea>
         <button id="send" class="btn"></button>
     </div>
-
 </body>
 
 <script src="gun.js"></script>
 <script>
+
+    localStorage.removeItem('gun/')
     var uid;
 
     if (localStorage.getItem('uid')) {
