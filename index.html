@@ -79,23 +79,23 @@
                 text-decoration: none;
             }
 
-            body{
-                font-family :Arial, Helvetica, sans-serif;
-            }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-            .bubble{
-                padding-left:5px;
-            }
+        .bubble {
+            padding-left: 5px;
+        }
     </style>
 
 </head>
 <body>
 
     <div id="header"><p>Altilunium Darkhall - <span id="bid"></span> <a href="https://rtnf.prose.sh/altilunium_darkhall" target="_blank"><small>[about]</small></a>  </p></div>
-    <div id="messages" class="card-block"></div>
+    <div id="messages" class="card-block">Connecting to server...</div>
     <br>
     <div id="bottom-bar" style="display:flex; flex-direction:row">
-        <div id="chat" spellcheck ="false" name="inputMessage" maxlength="450" onkeypress="handle(event)" contenteditable="true"></div>
+        <div id="chat" spellcheck="false" name="inputMessage" maxlength="450" onkeypress="handle(event)" contenteditable="true"></div>
         <button id="send" class="btn"></button>
     </div>
 </body>
@@ -111,11 +111,11 @@
     }
     else {
         uid = Math.floor(Math.random() * 100000);
-        localStorage.setItem('uid',uid)
+        localStorage.setItem('uid', uid)
     }
 
 
-    
+
 
 
     function findGetParameter(parameterName) {
@@ -159,7 +159,7 @@
 
             if (!identify) {
                 var today = new Date();
-                var time = today.getHours() + ":" + today.getMinutes() 
+                var time = today.getHours() + ":" + today.getMinutes()
                 var c = "<small><i>" + uid + " is entering this room at " + time + "</i></small>"
                 chatLog.push(c)
                 copy.put(JSON.stringify(chatLog))
@@ -172,7 +172,7 @@
             chatLog.forEach(iter)
 
             function iter(v, i, a) {
-                mother.innerHTML = mother.innerHTML + v +"<br>"
+                mother.innerHTML = mother.innerHTML + v + "<br>"
             }
             window.scrollTo(0, document.body.scrollHeight);
 
@@ -180,7 +180,7 @@
         }
         catch (err) {
             chatLog = []
-            var str = "<i>"+uid+" just cleared the chat log.</i>"
+            var str = "<i>" + uid + " just cleared the chat log.</i>"
             chatLog.push(str)
             copy.put(JSON.stringify(chatLog))
 
@@ -224,9 +224,9 @@
             var c = "<b class='bubble' style='border-left:5px solid " + stringToColour(uid) + "'>" + uid + "</b> : " + input.innerHTML
             chatLog.push(c)
             copy.put(JSON.stringify(chatLog))
-            
 
-            
+
+
             if (input.innerHTML.includes("data:image")) {
                 package = board + " : " + "img posting"
             }
@@ -246,21 +246,23 @@
     }
 
 
-    function handle(e) {
+    
+
+
+    //document.onkeypress = handle(e);
+
+    input.addEventListener('keypress', (e) => {
         if (e.keyCode === 13) {
             e.preventDefault();
             sendMessage();
         }
-    }
-
-
-    document.onkeypress = handle(e);
+    })
 
 
     window.addEventListener('beforeunload', (event) => {
         var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() 
-        var c = "<small><i>" + uid + " is leaving this room at "+time+"</i></small>"
+        var time = today.getHours() + ":" + today.getMinutes()
+        var c = "<small><i>" + uid + " is leaving this room at " + time + "</i></small>"
         chatLog.push(c)
         copy.put(JSON.stringify(chatLog))
 
