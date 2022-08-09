@@ -73,6 +73,14 @@
                 color: white;
                 text-decoration: none;
             }
+
+            body{
+                font-family :Arial, Helvetica, sans-serif;
+            }
+
+            .bubble{
+                padding-left:5px;
+            }
     </style>
 
 </head>
@@ -161,6 +169,7 @@
             function iter(v, i, a) {
                 mother.innerHTML = mother.innerHTML + v +"<br>"
             }
+            window.scrollTo(0, document.body.scrollHeight);
 
 
         }
@@ -184,6 +193,21 @@
 
     };
 
+
+    var stringToColour = function (str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        var colour = '#';
+        for (var i = 0; i < 3; i++) {
+            var value = (hash >> (i * 8)) & 0xFF;
+            colour += ('00' + value.toString(16)).substr(-2);
+        }
+        return colour;
+    }
+
+
     async function sendMessage() {
         if (input.value == "clear") {
             copy.put(null)
@@ -192,7 +216,7 @@
 
         }
         else {
-            var c = "<b>" + uid + "</b> : " + input.value
+            var c = "<b class='bubble' style='border-left:5px solid " + stringToColour(uid) + "'>" + uid + "</b> : " + input.value
             chatLog.push(c)
             copy.put(JSON.stringify(chatLog))
             package = board + " : " + input.value
