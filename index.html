@@ -30,9 +30,14 @@
 
 
         #chat {
-            width: 80%;
-            resize: none;
-            margin-left: 5px;
+            width: 83%;
+            /* resize: none; */
+            margin-left: 2%;
+            background-color: white;
+            height: 61%;
+            padding: 5px;
+            margin-bottom: 24px;
+            overflow: auto;
         }
 
         #send {
@@ -89,8 +94,8 @@
     <div id="header"><p>Altilunium Darkhall - <span id="bid"></span> <a href="https://rtnf.prose.sh/altilunium_darkhall" target="_blank"><small>[about]</small></a>  </p></div>
     <div id="messages" class="card-block"></div>
     <br>
-    <div id="bottom-bar">
-    <textarea id="chat" name="inputMessage" maxlength="450" onkeypress="handle(event)"></textarea>
+    <div id="bottom-bar" style="display:flex; flex-direction:row">
+        <div id="chat" spellcheck ="false" name="inputMessage" maxlength="450" onkeypress="handle(event)" contenteditable="true"></div>
         <button id="send" class="btn"></button>
     </div>
 </body>
@@ -209,21 +214,29 @@
 
 
     async function sendMessage() {
-        if (input.value == "clear") {
+        if (input.innerHTML == "clear") {
             copy.put(null)
         }
-        else if (input.value.includes("<script>")) {
+        else if (input.innerHTML.includes("<script>")) {
 
         }
         else {
-            var c = "<b class='bubble' style='border-left:5px solid " + stringToColour(uid) + "'>" + uid + "</b> : " + input.value
+            var c = "<b class='bubble' style='border-left:5px solid " + stringToColour(uid) + "'>" + uid + "</b> : " + input.innerHTML
             chatLog.push(c)
             copy.put(JSON.stringify(chatLog))
-            package = board + " : " + input.value
+            
+
+            
+            if (input.innerHTML.includes("data:image")) {
+                package = board + " : " + "img posting"
+            }
+            else {
+                package = board + " : " + input.innerHTML
+            }
             logAct(package)
         }
 
-        input.value = "";
+        input.innerHTML = "";
         input.focus();
     }
 
@@ -239,6 +252,10 @@
             sendMessage();
         }
     }
+
+
+    document.onkeypress = handle(e);
+
 
     window.addEventListener('beforeunload', (event) => {
         var today = new Date();
