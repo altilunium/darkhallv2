@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Darkhall</title>
@@ -95,7 +96,7 @@
     <div id="messages" class="card-block">Connecting to server...</div>
     <br>
     <div id="bottom-bar" style="display:flex; flex-direction:row">
-        <div id="chat" spellcheck="false" name="inputMessage" maxlength="450" onkeypress="handle(event)" contenteditable="true"></div>
+        <div id="chat" spellcheck="false" name="inputMessage" maxlength="450"  contenteditable="true"></div>
         <button id="send" class="btn"></button>
     </div>
 </body>
@@ -144,7 +145,8 @@
     }
 
 
-    gun = Gun(['https://rtnf-gun.herokuapp.com/gun','https://gun.ardinusawan.xyz/gun']);
+    gun = Gun(['https://rtnf-gun.herokuapp.com/gun', 'https://gun.ardinusawan.xyz/gun']);
+    
     copy = gun.get(board).get('chatlog');
     if (copy) {
         document.getElementById('messages').innerHTML = ""
@@ -262,7 +264,7 @@
     }
 
 
-    
+
 
 
     //document.onkeypress = handle(e);
